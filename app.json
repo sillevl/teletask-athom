@@ -8,5 +8,63 @@
     "author": {
         "name": "Sille Van Landschoot",
         "email": "sillevl@outlook.com"
-    }
+    },
+    "drivers": [
+        {
+            "id": "bulb",
+            "name": {
+                "en": "Hello world light bulb",
+                "nl": "Hallo wereld lamp"
+            },
+            "images": {
+                "large": "assets/drivers/bulb/large.jpg",
+                "small": "assets/drivers/bulb/large.jpg"
+            },
+            "class": "light",
+            "capabilities": [ "onoff"],
+            "pair": [
+                {
+                    "id": "start"
+                },
+                {
+                    "id": "list_bulbs",
+                    "template": "list_devices",
+                    "navigation": {
+                        "next": "add_bulbs"
+                    }
+                },
+                {
+                    "id": "add_bulbs",
+                    "template": "add_devices"
+                }
+            ]
+        },
+        {
+          "id": "thermometer",
+          "name": {
+              "en": "Hello world temperature",
+              "nl": "Hallo wereld temperatuur"
+          },
+          "images": {
+              "large": "assets/drivers/sensor/large.jpg",
+              "small": "assets/drivers/sensor/large.jpg"
+          },
+          "class": "sensor",
+          "capabilities": [ "measure_temperature"],
+          "pair": [
+    				{
+    					"id": "list_devices",
+    					"template": "list_devices",
+    					"navigation": {
+    						"next": "add_stations"
+    					}
+    				},
+    				{
+    					"id": "add_stations",
+    					"template": "add_devices"
+    				}
+    			]
+
+        }
+    ]
 }
