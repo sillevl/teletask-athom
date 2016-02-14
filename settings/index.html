@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <h1>Teletask</h1>
+
+        <fieldset>
+            <legend>Coap server settings</legend>
+
+            <div class="field row">
+                <label for="hostname">Hostname or IP</label>
+                <input id="hostname" type="text" value="" />
+            </div>
+
+        </fieldset>
+
+        <button class="right" onclick="save()">Save changes</button>
+
+        <script type="text/javascript">
+        function onHomeyReady(){
+            Homey.ready();
+            Homey.get("hostname", function (err, value) {
+                if ( value ) {
+                    document.getElementById( 'hostname' ).value = value;
+                }
+            });
+        }
+
+        function save() {
+            Homey.set('hostname', document.getElementById('hostname').value);
+        }
+        </script>
+
+    </body>
+</html>
