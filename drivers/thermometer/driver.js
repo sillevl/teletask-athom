@@ -1,6 +1,6 @@
 "use strict";
 
-var coap = require('coap')
+var coap = require('coap');
 
 var sensors = [
 		 {"number": 3, "description": "Buiten", "type": "LIGHT"}
@@ -13,7 +13,9 @@ var sensors = [
 		,{"number": 12, "description": "Keuken", "type": "LIGHT"}
 		,{"number": 13, "description": "Inkomhal", "type": "LIGHT"}
 		,{"number": 14, "description": "Aanbouw", "type": "LIGHT"}
-]
+];
+
+var settings = Homey.manager( 'settings' );
 
 var self = module.exports = {
 
@@ -39,7 +41,7 @@ var self = module.exports = {
 			get: function( device, callback ){
 				var err;
 				var options = {
-					host: '192.168.1.126',
+					host: settings.get('hostname'),
 					pathname: '/' + device.type + '/' + device.number,
 					method: 'GET'
 				}
@@ -58,14 +60,13 @@ var self = module.exports = {
 
 	pair: function( socket ) {
 
-		Homey.log('ThermoSmart pairing has started...');
+		Homey.log('Teletask pairing has started...');
 
 		socket.on('list_devices', function( data, callback ) {
 			var devices = sensors.map(function(sensor){
-				console.log(sensor.number + ' ' + sensor.description)
 				return {
 					data: {
-						id			: 'sensor/' + sensor.number,
+						id: 'sensor/' + sensor.number,
 						type: "sensor",
 						number: sensor.number
 					},
