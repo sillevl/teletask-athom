@@ -1,5 +1,7 @@
 "use strict";
 
+var coap = require('coap')
+
 var sensors = [
 		 {"number": 3, "description": "Buiten", "type": "LIGHT"}
 		,{"number": 4, "description": "Garage", "type": "LIGHT"}
@@ -36,7 +38,20 @@ var self = module.exports = {
 		measure_temperature: {
 			get: function( device, callback ){
 				var err;
-				callback( err, 12.34 );
+				var options = {
+					host: '192.168.1.126',
+					pathname: '/' + device.type + '/' + device.number,
+					method: 'GET'
+				}
+				var req = coap.request(options);
+
+			  req.on('response', function(res) {
+					var temperature = JSON.parse(res.payload.toString()).temperature;
+					temperature = Math.round(temperature * 10) / 10;
+					callback( err, temperature );
+			  });
+
+				req.end();
 			}
 		}
 	},
@@ -51,6 +66,8 @@ var self = module.exports = {
 				return {
 					data: {
 						id			: 'sensor/' + sensor.number,
+						type: "sensor",
+						number: sensor.number
 					},
 					name: sensor.description
 				};
